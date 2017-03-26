@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="./angular.js">
+    
+  </script>
+</head>
+<body ng-app="app" ng-controller="myCon">
+   <div>
+     {{val}}
+   </div>
+  <script>
+   var app=angular.module('app',[])
+   var foo=function($scope){
+      $scope.val=1;
+   };
+   //这样的代码不能被压缩
+   app.controller('myCon',foo)
+    </script>
+  
+</body>
+</html>
