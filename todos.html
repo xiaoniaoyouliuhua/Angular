@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/angular.js"></script>
+    <style>
+        .done{
+            color: red;
+        }
+    </style>
+</head>
+
+<body ng-app="app" ng-controller="todos">
+    <form ng-submit="add()">
+        <input type="text" ng-model="thing">
+    </form>
+    <ol>
+        <li  ng-repeat="(index,obj) in thinglist" ng-class="{done:obj.isDone}" ng-click="do(index)">{{ obj.text }}      <button ng-click="delete(index)"> X</button>  </li> 
+    </ol>
+    <h2>一共有{{n}}件事</h2>
+    <script>
+        var app = angular.module('app', []);
+        app.controller('todos', ['$scope', function ($scope) {
+            // $scope.thing=thing;
+            $scope.thinglist=[];
+            $scope.n=0;
+            $scope.add=function(){
+                // console.log(this.thing)
+                this.thinglist.push({
+                    text:this.thing,
+                    isDone:false
+                });
+                this.thing="";
+                this.n++;
+                // console.log(this.thinglist);
+            }
+            $scope.do=function(index){
+                // console.log(index);
+                this.thinglist[index].isDone=!this.thinglist[index].isDone;
+                this.n--;
+                console.log($scope.$digest)
+                $scope.$digest();
+                // $scope.$apply;
+                
+            }
+            $scope.delete= function (index){
+                console.log(index);
+                this.thinglist.splice(index,1);
+                event.stopPropagation();
+            }
+        }])
+    </script>
+</body>
+
+</html>
