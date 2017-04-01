@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <style>
+		div{
+			width: 500px;
+			height: 500px;
+			border: 1px solid #ccc;
+			margin: 50px auto;
+		}
+		input{
+			margin: 30px 0px 30px;
+		}
+		button{
+			margin-left:120px;
+			margin-top:50px;
+		}
+		span{
+			margin-left: 5px;
+			/* display:block; */
+		}
+		p{
+			text-align: center;
+			background-color: #ccc;
+			color:red;
+			display:inline;
+		}
+		.color{
+			color:green;
+		}
+    </style>
+    <body ng-app="mainApp">
+		<div ng-controller="register">
+			用户名: <input autofocus placeholder="请输入用户名" ng-blur="test()" ng-model="usn" type="text"><span ng-class={color:istrue}>{{waring}}</span>
+			<p ng-class={color:istrue}>{{waringText}}</p>
+			<br>
+			密&nbsp;码: <input ng-blur="add()" placeholder="9-10位密码" ng-model="pwd" type="text"><span ng-class={color:isOk}>{{error}}</span>
+			<p ng-class={color:isOk}>{{errorText}}</p>
+			<br>
+			<button ng-click="click()">注册</button>
+            <br>
+            <button ng-click="click1()">查看用户名</button>
+            <button ng-click="click2()">查看密码</button>
+		</div>
+    </body>
+    <script src="../angular.js"></script>
+    <script>
+
+    (function(){
+    	function isEmptyOrWhiteSpace(scope,id){
+    		return scope[id]==undefined || scope[id].trim().length==0
+    	}
+    	angular.module("mainApp",[])
+    	.controller("register",["$scope",function($scope){
+
+    		$scope.test=function(){
+    			//上来为空
+    			$scope.waring=" ";
+    			$scope.waringText=" ";
+    			$scope.istrue=false;
+
+
+				var data=["haohao","hanmeimei","lilei","yangtuo","777"];	
+    			for(var i=0;i<data.length;i++){
+    				var dataName=data[i];
+
+    				if(isEmptyOrWhiteSpace($scope,"usn")|| $scope.usn==dataName){
+    				
+    				$scope.waring="X";
+    				$scope.waringText="亲，换个名字呗";
+    				$scope.istrue=false;
+    				
+    			}else{
+    				$scope.waring="√";
+    				$scope.waringText="用户名可用";
+    				$scope.istrue=true;
+    			}
+    			}	
+    		}
+    		$scope.add=function(){
+    				$scope.isOk=false;
+    				$scope.error=" ";
+    				$scope.errorText=" ";
+    			if($scope.pwd==undefined || $scope.pwd.trim().length==0||$scope.pwd.trim().length<9){
+    				$scope.error="X";
+    				$scope.errorText="别少于九位数";
+    				$scope.isOk=false;
+    			}else{
+    				$scope.error="√";
+    				$scope.errorText="正确";
+    				$scope.isOk=true;
+    			}
+    		}
+    		$scope.click=function(){
+    			if($scope.istrue==false||$scope.isOk==false){
+    				alert("注册失败");
+    			}else{
+                    sessionStorage.setItem("userName",$scope.usn);
+                    sessionStorage.setItem("userPwd",$scope.pwd);
+    				alert("你成功了")
+    			}
+    		}
+            //查看用户信息
+            $scope.click1=function(){
+                alert(sessionStorage.getItem("userName"));
+            }
+            $scope.click2=function(){
+                alert(sessionStorage.getItem("userPwd"));
+            }
+    	}])
+    })()
+    
+    </script>
+</html>

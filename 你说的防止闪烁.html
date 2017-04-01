@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body ng-app="mainApp">
+    	<div ng-if="!show" height="170" width="170">
+    		<img src="timg.gif"  alt="">
+    	</div>
+    </body>
+    <script src="angular.js"></script>
+	<script>
+	angular.module("mainApp",[])
+		.run(["$rootScope","$timeout",function($rootScope,$timeout){
+			$timeout(function(){
+				$rootScope.show=true;
+			},2000)
+			
+		}])
+	</script>
+</html>
